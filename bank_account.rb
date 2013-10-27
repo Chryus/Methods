@@ -1,5 +1,14 @@
 class BankAccount
-  class << self
+  
+	  def self.create_for(first_name, last_name)
+	    @accounts ||= []
+	    @accounts << BankAccount.new(first_name, last_name)
+	  end
+
+	  def self.find_for(first_name, last_name)
+	  	@accounts.find { |account| account.full_name == "#{first_name} #{last_name}" }
+	  end
+
 =begin
 class methods work on a class, rather than an instance of a class
 they are prepended by self
@@ -8,31 +17,22 @@ self.create_for all allows the class to do two things
 	2. store (and thus track) that instance bank account in an array
 	3. ||= Conditional Assignment Operator: Assigns a value to a variable
 	if it doesn't already exist.     	
-=end	
-  def create_for(first_name, last_name)
-    @accounts ||= []
-    @accounts << BankAccount.new(first_name, last_name)
-  end
+=end
 
 #call find method to search for a match in the @accounts array
 #call .full instance method on an instance of the class array and compare to the interpolated 
 #name arguments 
-  def find_for(first_name, last_name)
-  	@accounts.find { |account| account.full_name == "#{first_name} #{last_name}" }
-  end
-end
 
 #end class methods
 #begin instance methods
 
-#initiatlize is the method that gets called when you instantiate your classes, i.e.,
-#create an instance of the class.
   def initialize(first_name, last_name)
   	@balance = 0
 	@first_name = first_name
 	@last_name = last_name
   end
-
+#initiatlize is the method that gets called when you instantiate your classes, i.e.,
+#create an instance of the class.
   def full_name
   	"#{@first_name} #{@last_name}"
   end
@@ -47,6 +47,14 @@ end
 
   def balance
   	@balance
+  end
+
+  def call_the_reset_method
+  	reset!
+  end
+
+  def reset!
+  	@balance -= amount
   end
 
 end
